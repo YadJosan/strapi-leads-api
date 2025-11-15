@@ -23,7 +23,7 @@
     "companystatus": {
       "type": "enumeration",
       "enum": [
-        "Active ",
+        "Active",
         "Inactive"
       ]
     }

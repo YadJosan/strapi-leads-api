@@ -286,7 +286,7 @@ export interface AdminSession extends Struct.CollectionTypeSchema {
       Schema.Attribute.Required &
       Schema.Attribute.Private &
       Schema.Attribute.Unique;
-    status: Schema.Attribute.String & Schema.Attribute.Private;
+    companystatus: Schema.Attribute.String & Schema.Attribute.Private;
     type: Schema.Attribute.String & Schema.Attribute.Private;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -479,7 +479,7 @@ export interface ApiLeadLead extends Struct.CollectionTypeSchema {
   };
   attributes: {
     company: Schema.Attribute.String;
-    companystatus: Schema.Attribute.Enumeration<['Active ', 'Inactive']>;
+    companystatus: Schema.Attribute.Enumeration<['Active', 'Inactive']>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -532,7 +532,7 @@ export interface PluginContentReleasesRelease
     publishedAt: Schema.Attribute.DateTime;
     releasedAt: Schema.Attribute.DateTime;
     scheduledAt: Schema.Attribute.DateTime;
-    status: Schema.Attribute.Enumeration<
+    companystatus: Schema.Attribute.Enumeration<
       ['ready', 'blocked', 'failed', 'done', 'empty']
     > &
       Schema.Attribute.Required;

@@ -1,61 +1,115 @@
-# 🚀 Getting started with Strapi
+# Strapi Leads API
 
-Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
+A REST API built with Strapi for managing leads with SQLite database.
 
-### `develop`
+## Features
 
-Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)
+- **GET /api/leads** - Retrieve all leads
+- **GET /api/leads/:id** - Retrieve a single lead
+- **POST /api/leads** - Create a new lead
+- **PUT /api/leads/:id** - Update an existing lead
+- **DELETE /api/leads/:id** - Delete a lead
 
+## Lead Model
+
+Each lead contains:
+- `name` (string, required)
+- `email` (email, required, unique)
+- `phone` (string, optional)
+- `company` (string, optional)
+- `status` (enum: new, contacted, qualified, converted, lost - default: new)
+- `notes` (text, optional)
+
+## Installation
+
+```bash
+npm install
 ```
+
+## Running the Application
+
+```bash
 npm run develop
-# or
-yarn develop
 ```
 
-### `start`
+The server will start at http://localhost:1337
 
-Start your Strapi application with autoReload disabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-start)
+## First Time Setup
 
-```
-npm run start
-# or
-yarn start
-```
+1. On first run, create an admin account at http://localhost:1337/admin
+2. The API permissions are automatically configured for public access
 
-### `build`
+## Database
 
-Build your admin panel. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-build)
+Data is stored in SQLite at `.tmp/data.db`
 
-```
-npm run build
-# or
-yarn build
+## API Examples
+
+### Get all leads
+```bash
+curl http://localhost:1337/api/leads
 ```
 
-## ⚙️ Deployment
+### Create a lead
+```bash
+curl -X POST http://localhost:1337/api/leads \
+  -H "Content-Type: application/json" \
+  -d '{
+    "data": {
+      "name": "John Doe",
+      "email": "john@example.com",
+      "phone": "555-1234",
+      "company": "Acme Corp",
+      "status": "new",
+      "notes": "Interested in product demo"
+    }
+  }'
+```
 
-Strapi gives you many possible deployment options for your project including [Strapi Cloud](https://cloud.strapi.io). Browse the [deployment section of the documentation](https://docs.strapi.io/dev-docs/deployment) to find the best solution for your use case.
+### Update a lead
+```bash
+curl -X PUT http://localhost:1337/api/leads/1 \
+  -H "Content-Type: application/json" \
+  -d '{
+    "data": {
+      "status": "contacted"
+    }
+  }'
+```
+
+### Get a single lead
+```bash
+curl http://localhost:1337/api/leads/1
+```
+
+### Delete a lead
+```bash
+curl -X DELETE http://localhost:1337/api/leads/1
+```
+
+## Project Structure
 
 ```
-yarn strapi deploy
+strapi-leads-api/
+├── src/
+│   ├── api/
+│   │   └── lead/
+│   │       ├── content-types/
+│   │       │   └── lead/
+│   │       │       ├── schema.json
+│   │       │       └── index.js
+│   │       ├── controllers/
+│   │       │   └── lead.js
+│   │       ├── routes/
+│   │       │   └── lead.js
+│   │       └── services/
+│   │           └── lead.js
+│   └── index.js
+└── .tmp/
+    └── data.db (SQLite database)
 ```
 
-## 📚 Learn more
+## Built With
 
-- [Resource center](https://strapi.io/resource-center) - Strapi resource center.
-- [Strapi documentation](https://docs.strapi.io) - Official Strapi documentation.
-- [Strapi tutorials](https://strapi.io/tutorials) - List of tutorials made by the core team and the community.
-- [Strapi blog](https://strapi.io/blog) - Official Strapi blog containing articles made by the Strapi team and the community.
-- [Changelog](https://strapi.io/changelog) - Find out about the Strapi product updates, new features and general improvements.
-
-Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/strapi). Your feedback and contributions are welcome!
-
-## ✨ Community
-
-- [Discord](https://discord.strapi.io) - Come chat with the Strapi community including the core team.
-- [Forum](https://forum.strapi.io/) - Place to discuss, ask questions and find answers, show your Strapi project and get feedback or just talk with other Community members.
-- [Awesome Strapi](https://github.com/strapi/awesome-strapi) - A curated list of awesome things related to Strapi.
-
----
-
-<sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>
+- [Strapi](https://strapi.io/) - Headless CMS
+- SQLite - Database
